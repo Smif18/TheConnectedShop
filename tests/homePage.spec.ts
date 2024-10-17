@@ -14,8 +14,10 @@ test.describe('checkHomePageElements', ()=>{
         const primaryLogo = logoLink.locator('img.Header__LogoImage--primary');
         const transparentLogo = logoLink.locator('img.Header__LogoImage--transparent');
         const threeLinks = page.locator('nav.Header__SecondaryNav');
-        const account = threeLinks.locator('a.Link--primary');
-        const searchLink = threeLinks.locator('xpath=a[@data-action.toggle-search]');
+        const account = page.locator('nav.Header__SecondaryNav a.Link--primary:has-text("Account")');
+        const searchLink = threeLinks.locator('a[data-action="toggle-search"]');
+        //const cart = page.locator('a[aria-label="Open-cart"]').first();
+        
   
 
         // проверка отображения логотипа
@@ -28,7 +30,15 @@ test.describe('checkHomePageElements', ()=>{
         await expect(transparentLogo).toHaveAttribute('src', '//theconnectedshop.com/cdn/shop/files/The_Connected_Shop_logo_250x.png?v=1705959163');
           // проверка ссылки Account
         await expect(account.getByText('account')).toBeVisible();
-        await expect(searchLink).toBeVisible();
-        //await expect(searchLink).toHaveAttribute('data-action', "toggle-search");
+        // второй вариант проверки на текст
+        await expect(account).toHaveText('Account');
+        // проверка на наличие ссылки в Account
+        await expect(account).toHaveAttribute('href', '/account');
+        // проверка search на наличие ссылки и видимость
+        await expect(searchLink.nth(0)).toBeVisible();
+        await expect(searchLink).toHaveAttribute('data-action', "toggle-search");
+        await expect(searchLink).toHaveAttribute('href', '/search');
+        // Проверка Cart
+        //await expect(cart).toBeVisible();
       })
 })
