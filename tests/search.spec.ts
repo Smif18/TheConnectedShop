@@ -24,6 +24,8 @@ test.describe('checkSearchFunction', ()=>{
         await expect(searchBar).toBeVisible();
         const searchImput = page.locator('input[name="q"]');
         await searchImput.fill('Test');
+        const noSearchResult = page.getByText('No results could be found')
+        await expect(noSearchResult).toBeVisible();
         // найти текст "No results could be found"
 
     })
